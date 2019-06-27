@@ -4,22 +4,11 @@
 #include "TankAIController.h"
 #include "Tank.h"
 #include "Engine/World.h"
-#include "TankPlayerController.h"
-#include "Components/ActorComponent.h"
+#include "GameFramework/Actor.h"
 
 void ATankAIController::BeginPlay()
 {
 	Super::BeginPlay();
-
-	auto PlayerTank = GetPlayerTank();
-	if (!PlayerTank)
-	{
-		UE_LOG(LogTemp, Warning, TEXT("TankAIController don't find Player tank"));
-	}
-	else
-	{
-		UE_LOG(LogTemp, Warning, TEXT("TankAIController found Player tank: %s"), *PlayerTank->GetName());
-	}
 }
 
 // Called every frame
@@ -27,26 +16,19 @@ void ATankAIController::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	if (GetPlayerTank())
+	auto PlayerTank = Cast<ATank>(GetWorld()->GetFirstPlayerController()->GetPawn());
+	auto ControlledTank = Cast<ATank>(GetPawn());
+
+	if (PlayerTank)
 	{
 		// TODO Move towards the player
 		
 		// Aim to player
-		GetControlledTank()->AimAt(GetPlayerTank()->GetTargetLocation());
+		ControlledTank->AimAt(PlayerTank->GetTargetLocation());
 
 		// Fire if ready
+		ControlledTank->Fire();	// TODO limit firing rate
 	}
 	
 }
 
-ATank* ATankAIController::GetControlledTank() const
-{
-	return Cast<ATank>(GetPawn());
-}
-
-ATank* ATankAIController::GetPlayerTank() const
-{
-	ATankPlayerController* TankPlayercontroller = Cast<ATankPlayerController>(GetWorld()->GetFirstPlayerController());
-	if (!TankPlayercontroller) { return nullptr; }
-	return TankPlayercontroller->GetControlledTank();
-}

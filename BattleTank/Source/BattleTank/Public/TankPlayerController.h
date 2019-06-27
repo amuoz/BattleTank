@@ -29,14 +29,14 @@ class BATTLETANK_API ATankPlayerController : public APlayerController
 	private:
 
 		// CrossHairX is located 50% on the screen
-		UPROPERTY(EditAnywhere)
+		UPROPERTY(EditDefaultsOnly)
 		float CrossHairXLocation = 0.5f;
 		// CrossHairY is located 33% on the screen
-		UPROPERTY(EditAnywhere)
+		UPROPERTY(EditDefaultsOnly)
 		float CrossHairYLocation = 0.33333f;
 
 		// max ray-cast range
-		UPROPERTY(EditAnywhere)
+		UPROPERTY(EditDefaultsOnly)
 		float LineTraceRange = 1000000.f;	// cm
 
 		// Start the tank moving the barrel so that a shot would hit
