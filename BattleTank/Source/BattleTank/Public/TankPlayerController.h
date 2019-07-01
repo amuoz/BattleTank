@@ -17,38 +17,41 @@ class BATTLETANK_API ATankPlayerController : public APlayerController
 {
 	GENERATED_BODY()
 
-	public:
+public:
 		
-		virtual void BeginPlay() override;
+	virtual void BeginPlay() override;
 
-		// Called every frame
-		virtual void Tick(float DeltaTime) override;
+	// Called every frame
+	virtual void Tick(float DeltaTime) override;
 
-		ATank* GetControlledTank() const;
+protected:
 
-	private:
+	UFUNCTION(BlueprintCallable, Category = "Setup")
+	ATank* GetControlledTank() const;
 
-		// CrossHairX is located 50% on the screen
-		UPROPERTY(EditDefaultsOnly)
-		float CrossHairXLocation = 0.5f;
-		// CrossHairY is located 33% on the screen
-		UPROPERTY(EditDefaultsOnly)
-		float CrossHairYLocation = 0.33333f;
+private:
 
-		// max ray-cast range
-		UPROPERTY(EditDefaultsOnly)
-		float LineTraceRange = 1000000.f;	// cm
+	// CrossHairX is located 50% on the screen
+	UPROPERTY(EditDefaultsOnly)
+	float CrossHairXLocation = 0.5f;
+	
+	// CrossHairY is located 33% on the screen
+	UPROPERTY(EditDefaultsOnly)
+	float CrossHairYLocation = 0.33333f;
 
-		// Start the tank moving the barrel so that a shot would hit
-		// where the crosshair intersects the world
-		void AimTowardsCrosshair();
+	// max ray-cast range
+	UPROPERTY(EditDefaultsOnly)
+	float LineTraceRange = 1000000.f;	// cm
 
-		// Return an OUT parameter, true if hit landscape
-		bool GetSightRayHitLocation(FVector& OutHitLocation) const;
+	// Start the tank moving the barrel so that a shot would hit
+	// where the crosshair intersects the world
+	void AimTowardsCrosshair();
 
-		// De-project the screen position of the crosshair to a world direction
-		bool GetLookDirection(FVector& LookDirection) const;
+	// Return an OUT parameter, true if hit landscape
+	bool GetSightRayHitLocation(FVector& OutHitLocation) const;
 
-		bool GetLookVectorHitLocation(FVector LookDirection, FVector& HitLocation) const;
+	// De-project the screen position of the crosshair to a world direction
+	bool GetLookDirection(FVector& LookDirection) const;
 
+	bool GetLookVectorHitLocation(FVector LookDirection, FVector& HitLocation) const;
 };

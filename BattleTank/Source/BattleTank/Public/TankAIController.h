@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// Copyright Encumbered Monkeys.
 
 #pragma once
 
@@ -24,4 +24,7 @@ class BATTLETANK_API ATankAIController : public AAIController
 	private:
 
 		virtual void BeginPlay() override;
+
+		// How close can the AI tank get
+		float AcceptanceRadius = 3000;
 };

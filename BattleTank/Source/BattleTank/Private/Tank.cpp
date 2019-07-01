@@ -7,6 +7,7 @@
 #include "Projectile.h"
 #include "Engine/StaticMeshSocket.h"
 #include "TankAimingComponent.h"
+#include "TankMovementComponent.h"
 
 // Sets default values
 ATank::ATank()
@@ -64,6 +65,4 @@ void ATank::Fire()
 		// reset fire time
 		LastFireTime = GetWorld()->GetTimeSeconds();
 	}
-
-
 }
