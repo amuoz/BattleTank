@@ -1,4 +1,4 @@
-// Copyright Encumbered Monkeys.
+// Copyright Encumbered Monkey.
 
 #pragma once
 

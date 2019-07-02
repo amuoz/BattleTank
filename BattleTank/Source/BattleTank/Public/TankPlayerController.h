@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// Copyright Encumbered Monkey.
 
 #pragma once
 
@@ -7,7 +7,7 @@
 #include "TankPlayerController.generated.h"
 
 // Forward declaration
-class ATank;
+class UTankAimingComponent;
 
 /**
  * Tank player controller
@@ -26,8 +26,8 @@ public:
 
 protected:
 
-	UFUNCTION(BlueprintCallable, Category = "Setup")
-	ATank* GetControlledTank() const;
+	UFUNCTION(BlueprintImplementableEvent, Category = "Setup")
+	void FoundAimingComponent(UTankAimingComponent* AimCompRef);
 
 private:
 
