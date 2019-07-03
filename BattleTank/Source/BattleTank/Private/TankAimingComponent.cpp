@@ -27,18 +27,31 @@ void UTankAimingComponent::TickComponent(float DeltaTime, ELevelTick TickType, F
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
-	if ((GetWorld()->GetTimeSeconds() - LastFireTime) < ReloadTimeInSeconds)
+	if (FiringState != EFiringState::NoAmmo)
 	{
-		FiringState = EFiringState::Reloading;
+		if ((GetWorld()->GetTimeSeconds() - LastFireTime) < ReloadTimeInSeconds)
+		{
+			FiringState = EFiringState::Reloading;
+		}
+		else if (IsBarrelMoving())
+		{
+			FiringState = EFiringState::Aiming;
+		}
+		else
+		{
+			FiringState = EFiringState::Locked;
+		}
 	}
-	else if (IsBarrelMoving())
-	{
-		FiringState = EFiringState::Aiming;
-	}
-	else
-	{
-		FiringState = EFiringState::Locked;
-	}
+}
+
+int UTankAimingComponent::GetAmmo() const
+{
+	return Ammo;
+}
+
+EFiringState UTankAimingComponent::GetFiringState() const
+{
+	return FiringState;
 }
 
 bool UTankAimingComponent::IsBarrelMoving()
@@ -103,7 +116,7 @@ void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
 
 void UTankAimingComponent::Fire()
 {
-	if (FiringState != EFiringState::Reloading)
+	if (FiringState != EFiringState::Reloading && FiringState != EFiringState::NoAmmo)
 	{
 		if (!ensure(Barrel)) { return; }
 		if (!ensure(ProjectileBlueprint)) { return; }
@@ -116,7 +129,15 @@ void UTankAimingComponent::Fire()
 			);
 
 		Projectile->LaunchProjectile(LaunchSpeed);
+
 		// reset fire time
 		LastFireTime = GetWorld()->GetTimeSeconds();
+
+		Ammo--;
+		if (Ammo == 0)
+		{
+			FiringState = EFiringState::NoAmmo;
+		}
+
 	}
 }
