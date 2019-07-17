@@ -44,7 +44,7 @@ void UTankAimingComponent::TickComponent(float DeltaTime, ELevelTick TickType, F
 	}
 }
 
-int UTankAimingComponent::GetAmmo() const
+int32 UTankAimingComponent::GetAmmo() const
 {
 	return Ammo;
 }
