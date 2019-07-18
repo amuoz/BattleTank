@@ -13,6 +13,8 @@ UTankAimingComponent::UTankAimingComponent()
 {
 	bWantsBeginPlay = true;
 	PrimaryComponentTick.bCanEverTick = true;
+
+	ProjectileBlueprint = CreateDefaultSubobject<AProjectile>(FName("Projectile"));
 }
 
 void UTankAimingComponent::BeginPlay()

@@ -28,7 +28,10 @@ void ATankAIController::SetPawn(APawn * InPawn)
 
 void ATankAIController::OnPossedTankDeath()
 {
-	UE_LOG(LogTemp, Warning, TEXT("Received!"));
+	if (!GetPawn())
+	{
+		GetPawn()->DetachFromControllerPendingDestroy();
+	}
 }
 
 // Called every frame
@@ -38,7 +41,7 @@ void ATankAIController::Tick(float DeltaTime)
 
 	auto PlayerTank = GetWorld()->GetFirstPlayerController()->GetPawn();
 
-	if (!ensure(PlayerTank)) { return; }
+	if (!PlayerTank) { return; }
 
 	// Move towards the player
 	MoveToActor(PlayerTank, AcceptanceRadius);	// TODO check radius is in cm

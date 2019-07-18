@@ -19,6 +19,8 @@ ATank::ATank()
 void ATank::BeginPlay() 
 {
 	Super::BeginPlay();	// Needed for BP Begin play to run!
+
+	CurrentHealth = StartingHealth;
 }
 
 float ATank::TakeDamage(float DamageAmount, struct FDamageEvent const & DamageEvent, class AController * EventInstigator, AActor * DamageCauser) 
